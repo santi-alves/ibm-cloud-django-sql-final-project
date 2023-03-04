@@ -115,6 +115,18 @@ class Enrollment(models.Model):
     #    else:
     #        return False
 
+# MY CODE
+    # Question model
+class Question(models.Model):
+    question_content = models.TextField()
+    grade_point = models.FloatField()
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.question_content + "," + \
+               self.grade_point + "," + \
+                self.course
+
 
 #  <HINT> Create a Choice Model with:
     # Used to persist choice content for a question
