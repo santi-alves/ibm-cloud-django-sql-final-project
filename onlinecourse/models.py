@@ -116,15 +116,17 @@ class Enrollment(models.Model):
     #        return False
 
 # MY CODE
-    # Question model
+# Question model
 class Question(models.Model):
-    question_content = models.TextField()
-    grade_point = models.FloatField()
+    question_text = models.TextField()
+    grade = models.FloatField()
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    # Should be foreignKey rel with Lesson ???
+    #lesson = models.ManyToManyField(Lesson, through="Courses")
 
     def __str__(self):
-        return self.question_content + "," + \
-               self.grade_point + "," + \
+        return self.question_text + "," + \
+               self.grade + "," + \
                 self.course
 
 
@@ -134,13 +136,25 @@ class Question(models.Model):
     # Choice content
     # Indicate if this choice of the question is a correct one or not
     # Other fields and methods you would like to design
-# class Choice(models.Model):
+
+# Choice model
+class Choice(models.Model):
+    choice_text = models.TextField()
+    is_correct = models.BooleanField()
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+def __str__(self):
+    return self.choice_text + "," + \
+            self.is_correct + "," + \
+            self.question
 
 # <HINT> The submission model
 # One enrollment could have multiple submission
 # One submission could have multiple choices
 # One choice could belong to multiple submissions
-#class Submission(models.Model):
-#    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
-#    chocies = models.ManyToManyField(Choice)
-#    Other fields and methods you would like to design
+
+# Submission model
+class Submission(models.Model):
+   enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
+   choices = models.ManyToManyField(Choice)
+   # Other fields and methods you would like to design
