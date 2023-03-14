@@ -121,13 +121,30 @@ class Question(models.Model):
     question_text = models.TextField()
     grade = models.FloatField()
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     # Should be foreignKey rel with Lesson ???
     #lesson = models.ManyToManyField(Lesson, through="Courses")
 
     def __str__(self):
         return self.question_text + "," + \
-               self.grade + "," + \
-                self.course
+               str(self.grade)
+
+    # WHAT SHOULD choice_set / selected_ids be ???
+    # GET IT FROM Choices model and push it to a list ???
+    # CHOICE_A = "choice_a"
+    # CHOICE_B = "choice_b"
+    # CHOICE_C = "choice_c"
+    # choice_set = [(CHOICE_A, "Choice_a"), (CHOICE_B, "Choice_b"), (CHOICE_C, 
+    # "Choice_c")]
+
+    # <HINT> A sample model method to calculate if learner get the score of the question
+    # def is_get_score(self, selected_ids):
+    #    all_answers = self.choice_set.filter(is_correct=True).count()
+    #    selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
+    #    if all_answers == selected_correct:
+    #        return True
+    #    else:
+    #        return False
 
 
 #  <HINT> Create a Choice Model with:
